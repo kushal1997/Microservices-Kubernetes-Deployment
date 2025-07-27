@@ -195,6 +195,62 @@ curl http://localhost/health
 
 ---
 
+## Running the Project
+
+To deploy all microservices, services, and ingress in the correct order:
+
+### 1. Apply Deployments and Services
+
+```bash
+  kubectl apply -f user-service.yaml
+  kubectl apply -f product-service.yaml
+  kubectl apply -f order-service.yaml
+  kubectl apply -f gateway-service.yaml
+```
+### 2. Verify Pods and Resource Usage
+```
+  kubectl get pods
+  kubectl top pods
+```
+### 3. Apply Ingress Resources
+> Change directory to `K8s/ingress`
+```
+  kubectl apply -f user-ingress.yaml
+  kubectl apply -f product-ingress.yaml
+  kubectl apply -f order-ingress.yaml
+  kubectl apply -f gateway-ingress.yaml
+```
+### 4. Test APIs
+```
+  curl http://localhost/api/users/health
+  curl http://localhost/api/products/health
+  curl http://localhost/api/orders/health
+  curl http://localhost/health
+```
+### Cleanup Instructions
+To delete all running resources and clean up your cluster:
+
+#### Delete All Deployments and Services
+```
+  kubectl delete deployments --all
+  kubectl delete svc --all
+
+```
+#### Delete Ingress Resources Individually
+> Change directory to `K8s/ingress`
+```
+  kubectl delete ingress user-ingress
+  kubectl delete ingress product-ingress
+  kubectl delete ingress order-ingress
+  kubectl delete ingress gateway-ingress
+```
+#### Confirm Cleanup
+```
+  kubectl get all
+  kubectl get ingress
+```
+
+---
 ## Difficulties Faced:
 
 | Problem   | Solution |
@@ -219,3 +275,6 @@ curl http://localhost/health
 - [Node.js Docker Best Practices](https://nodejs.org/en/docs/guides/nodejs-docker-webapp/)
 - [kubectl Cheat Sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)
 
+---
+
+<br>
